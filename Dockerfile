@@ -1,6 +1,4 @@
-ARG BASE_TAG="develop"
-ARG BASE_IMAGE="core-ubuntu-focal"
-FROM kasmweb/$BASE_IMAGE:$BASE_TAG
+FROM kasmweb/core-ubuntu-jammy:1.18.0
 USER root
 
 ENV HOME /home/kasm-default-profile
@@ -10,24 +8,17 @@ WORKDIR $HOME
 
 ######### Customize Container Here ###########
 
-
 COPY ./src/ubuntu/install/viber $INST_SCRIPTS/viber/
 RUN bash $INST_SCRIPTS/viber/install_viber.sh  && rm -rf $INST_SCRIPTS/viber/
 
-COPY ./src/ubuntu/install/viber/custom_startup.sh $STARTUPDIR/custom_startup.sh
-RUN chmod +x $STARTUPDIR/custom_startup.sh
-RUN chmod 755 $STARTUPDIR/custom_startup.sh
-
-
-# Update the desktop environment to be optimized for a single application
-RUN cp $HOME/.config/xfce4/xfconf/single-application-xfce-perchannel-xml/* $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/
-RUN cp /usr/share/backgrounds/bg_kasm.png /usr/share/backgrounds/bg_default.png
-RUN apt-get remove -y xfce4-panel
+RUN echo "/usr/bin/desktop_ready && /opt/viber/Viber &" > $STARTUPDIR/custom_startup.sh \\
+&& chmod +x $STARTUPDIR/custom_startup.sh
 
 
 ######### End Customizations ###########
 
 RUN chown 1000:0 $HOME
+RUN $STARTUPDIR/set_user_permission.sh $HOME
 
 ENV HOME /home/kasm-user
 WORKDIR $HOME
