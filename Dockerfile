@@ -10,12 +10,12 @@ WORKDIR $HOME
 
 COPY ./src/ubuntu/install/viber $INST_SCRIPTS/viber/
 #RUN bash $INST_SCRIPTS/viber/install_viber.sh  && rm -rf $INST_SCRIPTS/viber/
-RUN  wget -O /tmp/viber.deb https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb \\
-      && apt-get update \\
-      && sudo dpkg -i viber.deb \\
-      && sudo apt-get install -f \\
-      && cp /usr/share/applications/viber.desktop $HOME/Desktop/ \\
-      && chmod +x $HOME/Desktop/viber.desktop \\
+RUN  wget -O /tmp/viber.deb https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb \
+      && apt-get update \
+      && sudo dpkg -i viber.deb \
+      && sudo apt-get install -f \
+      && cp /usr/share/applications/viber.desktop $HOME/Desktop/ \
+      && chmod +x $HOME/Desktop/viber.desktop \
       && chown 1000:1000 $HOME/Desktop/viber.desktop
 
 RUN echo "/usr/bin/desktop_ready && /opt/viber/Viber &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
