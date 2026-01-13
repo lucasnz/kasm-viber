@@ -14,6 +14,7 @@ RUN  wget -O /tmp/viber.deb https://download.cdn.viber.com/cdn/desktop/Linux/vib
       && apt-get update \
       && sudo dpkg -i /tmp/viber.deb \
       && sudo apt-get install -f \
+      && sudo apt install libc6:i386 libatomic1:i386 \
       && cp /usr/share/applications/viber.desktop $HOME/Desktop/ \
       && chmod +x $HOME/Desktop/viber.desktop \
       && chown 1000:1000 $HOME/Desktop/viber.desktop
