@@ -20,7 +20,8 @@ WORKDIR $HOME
 #      && chown 1000:1000 $HOME/Desktop/viber.desktop
 #RUN echo "/usr/bin/desktop_ready && /opt/viber/Viber &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
 
-RUN wget -O /opt/viber.AppImage https://download.cdn.viber.com/desktop/Linux/viber.AppImage \
+RUN apt-get update && apt-get install libfuse2 \ 
+      && wget -O /opt/viber.AppImage https://download.cdn.viber.com/desktop/Linux/viber.AppImage \
       && chmod +x /opt/viber.AppImage \
       && echo "/usr/bin/desktop_ready && /opt/viber.AppImage &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
 
