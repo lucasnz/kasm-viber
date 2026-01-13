@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
     libpipewire-0.3-0 \
     libqt5multimedia5 \
     libqt5multimediawidgets5 \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/* \
     && wget -O /opt/viber.AppImage https://download.cdn.viber.com/desktop/Linux/viber.AppImage \
     && chmod +x /opt/viber.AppImage \
     && echo "/usr/bin/desktop_ready && /opt/viber.AppImage --appimage-extract-and-run &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
