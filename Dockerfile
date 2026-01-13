@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
 
 
 ## --> Copy custom_startup.sh script to the startup directory inside the image
-COPY ./custom_startup.sh $STARTUPDIR/custom_startup.sh
+COPY ./src/ubuntu/install/viber/custom_startup.sh $STARTUPDIR/custom_startup.sh
 ## --> Set permissions
 RUN chmod 755 $STARTUPDIR/custom_startup.sh
 
