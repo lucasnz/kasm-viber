@@ -8,17 +8,10 @@ WORKDIR $HOME
 
 ######### Customize Container Here ###########
 
-#COPY ./src/ubuntu/install/viber $INST_SCRIPTS/viber/
-#RUN bash $INST_SCRIPTS/viber/install_viber.sh  && rm -rf $INST_SCRIPTS/viber/
-#RUN  wget -O /tmp/viber.deb https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb \
-#      && apt-get update \
-#      && sudo dpkg -i /tmp/viber.deb \
-#      && sudo apt-get install -f \
-#      && sudo apt install libc6:i386 libatomic1:i386 \
-#      && cp /usr/share/applications/viber.desktop $HOME/Desktop/ \
-#      && chmod +x $HOME/Desktop/viber.desktop \
-#      && chown 1000:1000 $HOME/Desktop/viber.desktop
-#RUN echo "/usr/bin/desktop_ready && /opt/viber/Viber &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
+## Update the desktop environment to be optimized for a single application
+RUN cp $HOME/.config/xfce4/xfconf/single-application-xfce-perchannel-xml/* $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/
+# Remove the xfce4-panel
+RUN apt-get remove -y xfce4-panel
 
 RUN apt-get update && apt-get install -y \
     pipewire \
@@ -27,10 +20,15 @@ RUN apt-get update && apt-get install -y \
     libqt5multimedia5 \
     libqt5multimediawidgets5 \
     && rm -rf /var/lib/apt/lists/* \
-    && wget -O /opt/viber.AppImage https://download.cdn.viber.com/desktop/Linux/viber.AppImage \
+    && wget -qO /opt/viber.AppImage https://download.cdn.viber.com/desktop/Linux/viber.AppImage \
     && chmod +x /opt/viber.AppImage \
     && echo "/usr/bin/desktop_ready && /opt/viber.AppImage --appimage-extract-and-run &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
-    
+
+
+## --> Copy custom_startup.sh script to the startup directory inside the image
+COPY ./custom_startup.sh $STARTUPDIR/custom_startup.sh
+## --> Set permissions
+RUN chmod 755 $STARTUPDIR/custom_startup.sh
 
 ######### End Customizations ###########
 
