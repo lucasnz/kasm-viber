@@ -11,8 +11,7 @@ WORKDIR $HOME
 COPY ./src/ubuntu/install/viber $INST_SCRIPTS/viber/
 RUN bash $INST_SCRIPTS/viber/install_viber.sh  && rm -rf $INST_SCRIPTS/viber/
 
-RUN echo "/usr/bin/desktop_ready && /opt/viber/Viber &" > $STARTUPDIR/custom_startup.sh \\
-&& chmod +x $STARTUPDIR/custom_startup.sh
+RUN echo "/usr/bin/desktop_ready && /opt/viber/Viber &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
 
 
 ######### End Customizations ###########
