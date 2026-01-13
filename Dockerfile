@@ -20,11 +20,17 @@ WORKDIR $HOME
 #      && chown 1000:1000 $HOME/Desktop/viber.desktop
 #RUN echo "/usr/bin/desktop_ready && /opt/viber/Viber &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
 
-RUN apt-get update && apt-get install libva \ 
-      && wget -O /opt/viber.AppImage https://download.cdn.viber.com/desktop/Linux/viber.AppImage \
-      && chmod +x /opt/viber.AppImage \
-      && echo "/usr/bin/desktop_ready && /opt/viber.AppImage --appimage-extract-and-run &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
-
+RUN apt-get update && apt-get install -y \
+    pipewire \
+    pipewire-audio-client-libraries \
+    libpipewire-0.3-0 \
+    libqt5multimedia5 \
+    libqt5multimediawidgets5 \
+    && rm -rf /var/lib/apt/lists/* 
+    && wget -O /opt/viber.AppImage https://download.cdn.viber.com/desktop/Linux/viber.AppImage \
+    && chmod +x /opt/viber.AppImage \
+    && echo "/usr/bin/desktop_ready && /opt/viber.AppImage --appimage-extract-and-run &" > $STARTUPDIR/custom_startup.sh && chmod +x $STARTUPDIR/custom_startup.sh
+    
 
 ######### End Customizations ###########
 
