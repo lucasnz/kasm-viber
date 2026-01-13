@@ -12,7 +12,7 @@ COPY ./src/ubuntu/install/viber $INST_SCRIPTS/viber/
 #RUN bash $INST_SCRIPTS/viber/install_viber.sh  && rm -rf $INST_SCRIPTS/viber/
 RUN  wget -O /tmp/viber.deb https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb \
       && apt-get update \
-      && sudo dpkg -i viber.deb \
+      && sudo dpkg -i /tmp/viber.deb \
       && sudo apt-get install -f \
       && cp /usr/share/applications/viber.desktop $HOME/Desktop/ \
       && chmod +x $HOME/Desktop/viber.desktop \
